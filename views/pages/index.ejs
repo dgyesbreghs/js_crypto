@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+  <script type="text/javascript">
+    $.post("/crypto", function(data, status){
+      const invested = (207.98 + 103.99 + 145.83);
+      $("#balance").append(' ' + data.balance.amount + ' ' + data.balance.currency);
+      $("#native_balance").append(' ' + data.native_balance.amount + ' ' + data.native_balance.currency);
+      $("#invested").append(' ' + Math.abs(invested).toFixed(2) + ' ' + data.native_balance.currency);
+      $("#profit").append(' ' + Math.abs(data.native_balance.amount - invested).toFixed(2) + ' ' + data.native_balance.currency);
+    });
+  </script>
+</head>
+
+<body>
+  <div id="container">
+    <div id="title"><h1>Crypto</h1></div>
+    <div id="info">
+        <div id="balance"><label>Balance:</label></div>
+        <div id="native_balance"><label>Native Balance:</label></div>
+        <div id="invested"><label>Invested:</label></div>
+        <div id="profit"><label>Profit:</label></div>
+    </div>
+  </div>
+</body>
+</html>
