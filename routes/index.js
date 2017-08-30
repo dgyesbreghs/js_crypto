@@ -1,5 +1,5 @@
 module.exports = function index(request, response) {
-    if (request.query.username == "dgyesbreghs") {
+    if (request.query.username == "4i{K7k[MYdkaYc,M") {
         response.render('pages/index');
         return;
     }

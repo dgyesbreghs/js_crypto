@@ -3,13 +3,21 @@
 <head>
   <% include ../partials/header.ejs %>
   <script type="text/javascript">
-    $.post("/crypto", function(data, status){
-      const invested = (207.98 + 103.99 + 145.83);
-      $("#balance").append(' ' + data.balance.amount + ' ' + data.balance.currency);
-      $("#native_balance").append(' ' + data.native_balance.amount + ' ' + data.native_balance.currency);
-      $("#invested").append(' ' + Math.abs(invested).toFixed(2) + ' ' + data.native_balance.currency);
-      $("#profit").append(' ' + Math.abs(data.native_balance.amount - invested).toFixed(2) + ' ' + data.native_balance.currency);
-    });
+    function refreshData() {
+      $.post("/crypto", function(data, status){
+        const invested = (207.98 + 103.99 + 145.83);
+        $("#balance").html('<label>Balance:</label> ' + data.balance.amount + ' ' + data.balance.currency);
+        $("#native_balance").html('<label>Native Balance:</label> ' + data.native_balance.amount + ' ' + data.native_balance.currency);
+        $("#invested").html('<label>Invested:</label> ' + Math.abs(invested).toFixed(2) + ' ' + data.native_balance.currency);
+        $("#profit").html('<label>Profit:</label> ' + Math.abs(data.native_balance.amount - invested).toFixed(2) + ' ' + data.native_balance.currency);
+        $("#current_price").html('<label>Currenct Price:</label> ' + Math.abs(data.native_balance.amount / data.balance.amount).toFixed(2) + ' ' + data.native_balance.currency);
+      });
+    }
+
+    setInterval(function(){
+      refreshData();
+    }, 60000);
+    refreshData();
   </script>
 </head>
 
@@ -21,8 +29,9 @@
         <div id="native_balance"><label>Native Balance:</label></div>
         <div id="invested"><label>Invested:</label></div>
         <div id="profit"><label>Profit:</label></div>
+        <div id="current_price"><label>Currenct Price:</label></div>
     </div>
-    <% include ../partials/footer.ejs %>
   </div>
+  <% include ../partials/footer.ejs %>
 </body>
 </html>
